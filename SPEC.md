@@ -6,6 +6,9 @@
 # <- 줄 주석
 # `A #=> B` 는 gomool 코드 A가 golang 코드 B로 컴파일 된다는 뜻.
 
+# ;이 2개 이상 연달아 있으면 newline이랑 동일.
+# ;이 하나인 것은 별도의 separator임.
+
 # -- 패키지
 
 package PKG #=> package PKG
@@ -148,4 +151,52 @@ go f(x)
 go =>
   print(20)
 #=> go func(){ print(20) }()
+```
+
+## Example code
+
+```
+package main
+
+import "fmt"
+       sub "github.com/abc/sub"
+
+main() =
+  fmt.Println("Hello, World!")
+
+fibo: (int) => int
+fibo(n) = switch _
+  n <= 1 -> n
+  _      -> fibo(n - 1) + fibo(n - 1)
+
+fiboFast: (int) => int
+fiboFast(n) =
+  a, b = 0, 1
+  for i = 0; i < n; i += 1
+    a, b = b, a + b
+  a
+
+typedFunc = (x: int, y: float) =>:(float)
+  float(x) + y
+
+makeGoroutines: (int) => _
+makeGoroutines(n) =
+  wg = sync.WaitGroup()
+  for i = 0; i < n; i += 1
+    wg.Add()
+    go =>
+      sync.Sleep(10)
+      wg.Done()
+  wg.Wait()
+
+Cons := @{ any; any }
+Nil := @{}
+
+Len_able := @.{ Len: () => int }
+
+Cons.Len: () => int
+x.Len() = 1 + Len_able(x).Len()
+
+Nil.Len: () => int
+x.Len() = 0
 ```
