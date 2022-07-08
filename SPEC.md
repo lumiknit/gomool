@@ -121,6 +121,14 @@ box := @{ int; a, b, c: int }
 # 다만 함수 타입을 지정할 때 메소드가 아닌 일반 함수 형식으로 해야됨.
 addible := @.{ add: (int) => int; zero: int }
 
+# struct, interface도 다른 것들과 비슷하게 {}를 블록으로 치환 가능.
+myType := @
+  a: int
+  b, c, d: float
+
+myInt := @.
+  a: print
+
 # -- 블록
 # gomool도 파이썬처럼 indentation된 block을 block으로 판단함.
 # 예를 들어서 multiline function은
@@ -194,7 +202,7 @@ fiboFast(n) =
     a, b = b, a + b
   a
 
-typedFunc = (x: int, y: float) =>:(float, float)
+typedFunc = (x: int, y: float) => :(float, float)
   float(x) + y
 
 makeGoroutines: (int) => _
@@ -220,4 +228,37 @@ x.Len() = 0
 
 defer =>
   a = 20
+```
+
+## 기타 추가할만한 것들
+
+- struct{}{} 대체용? @{}{}
+- struct 생성자도 `@` 쓰는 것처럼 block으로 하면 좋을 것 같음.
+- 모든 중괄호는 블럭으로 사용할 수 있도록 함
+```
+Complex := @
+  x: int
+  Name: string
+
+obj = Complex
+        x = 42
+        Name = print 60
+```
+- map, chan 대체?a
+- map은 `[int]->float 처럼?
+- chan = -, <-chan = <-, chan<- = -<
+
+```
+symbols: [string]->int
+
+arr: [3]int
+
+symbols["boom"] = 20
+
+ch : -int
+
+go =>
+  ch <- 20
+  println(<-ch)
+
 ```
